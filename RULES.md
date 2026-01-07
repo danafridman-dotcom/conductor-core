@@ -64,3 +64,89 @@ allowed to trigger actions.
 
 If FILTERS = NO_TRADE
 RULES are NOT evaluated.
+# RULES
+
+This layer defines EXECUTION RULES.
+This is the ONLY layer allowed to open or close trades.
+
+RULES execute ONLY if:
+- STATE ≠ NO_TRADE
+- FILTERS = TRADE_ALLOWED
+
+RULES do NOT interpret the market.
+They only EXECUTE predefined actions.
+
+---
+
+## Execution Principles
+
+- One position at a time
+- No averaging
+- No revenge trades
+- No discretionary overrides
+- All actions are rule-based
+
+---
+
+## Entry Rules
+
+A trade MAY be opened ONLY if:
+
+1. STATE = LONG or SHORT
+2. FILTERS = TRADE_ALLOWED
+3. SIGNALS provide a valid trigger
+4. Entry is executed at predefined price level
+5. Stop-loss and take-profit are defined BEFORE entry
+
+If any condition is missing → NO TRADE.
+
+---
+
+## Stop-Loss Rules
+
+- Stop-loss is mandatory for every trade
+- Stop-loss is placed immediately on entry
+- Stop-loss is NEVER widened
+- Stop-loss defines the maximum loss per trade
+
+---
+
+## Take-Profit Rules
+
+- Take-profit levels are predefined
+- Partial exits are allowed only if specified
+- No moving take-profit closer out of fear
+- No cancelling take-profit impulsively
+
+---
+
+## Trade Management
+
+- No manual intervention after entry
+- No adding to losing positions
+- No closing early without rule-based condition
+- No emotional exits
+
+---
+
+## Exit Conditions
+
+A trade is closed ONLY if:
+
+- Stop-loss is hit
+- Take-profit is hit
+- A predefined rule-based exit condition is met
+
+Nothing else.
+
+---
+
+## Forbidden Actions
+
+- Trading during NO_TRADE state
+- Trading without stop-loss
+- Trading against STATE
+- Trading during FILTERS = BLOCKED
+- Overriding RULES manually
+
+Violation of any rule invalidates the system.
