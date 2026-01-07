@@ -31,3 +31,24 @@ A signal may only state:
 
 Never:
 > “We should do X”
+# SIGNALS
+
+This file defines MARKET OBSERVATIONS.
+
+SIGNALS describe what the market is doing,
+without deciding whether to trade or not.
+
+SIGNALS do NOT execute trades.
+SIGNALS do NOT allow or block execution.
+
+They only report observable conditions.
+
+Examples:
+- Break of structure (BOS)
+- Higher High / Lower Low
+- Volume expansion
+- Momentum shift
+- Volatility spike
+- Range compression
+
+SIGNALS are inputs for FILTERS and RULES.
