@@ -45,3 +45,22 @@ Trading is FORBIDDEN when:
 ---
 
 Status: ACTIVE
+# RULES
+
+This file defines EXECUTION RULES.
+
+RULES are evaluated ONLY IF:
+- STATE is defined
+- SIGNALS are present
+- FILTERS allow execution
+
+RULES define:
+- how to enter
+- how to manage risk
+- how to exit
+
+RULES are the ONLY layer
+allowed to trigger actions.
+
+If FILTERS = NO_TRADE
+RULES are NOT evaluated.
