@@ -71,3 +71,21 @@ STATE does NOT generate signals.
 STATE does NOT execute trades.
 
 STATE only defines the market phase.
+# STATE
+
+This file defines the CURRENT MARKET STATE.
+
+STATE is a classification layer.
+It answers the question:
+
+"What phase is the market in right now?"
+
+Possible states:
+- LONG
+- SHORT
+- NO_TRADE
+
+STATE does NOT generate signals.
+STATE does NOT execute trades.
+
+STATE only defines the market phase.
