@@ -23,3 +23,26 @@ Prevent trading in unfavorable conditions.
 ## Rules
 - If any critical filter fails → NO_TRADE
 - Filters override Signals and State
+# FILTERS
+
+This file defines EXECUTION PERMISSION.
+
+FILTERS decide whether trading is allowed
+based on current market conditions.
+
+FILTERS do NOT define entries.
+FILTERS do NOT define exits.
+
+They only return:
+- TRADE_ALLOWED
+- NO_TRADE
+
+Examples of blocking conditions:
+- Extreme volatility
+- Low liquidity
+- News / event risk
+- Structural uncertainty
+- Session mismatch
+
+FILTERS operate AFTER SIGNALS
+and BEFORE RULES.
