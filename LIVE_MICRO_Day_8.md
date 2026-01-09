@@ -1,4 +1,4 @@
-# LIVE MICRO — Day 8 (Pressure Test)
+# LIVE MICRO — Day 8 
 
 ## 🎯 Цель дня
 Проверка устойчивости ядра под лёгким давлением.
