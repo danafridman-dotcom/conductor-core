@@ -34,7 +34,13 @@ LIVE SMALL — режим аккуратного возвращения к ак�
 
 ## Статус
 ACTIVE
-  =## Дни LIVE SMALL
+  =## Дни LIVE SMALL---
+
+## Дни LIVE SMALL
+
+- [Day 1](DAY_1.md)
+- [Day 3](DAY_3.md)
+- [Day 4](DAY_4.md)
 
 - [Day 1](DAY_1.md)
 - [Day 3](DAY_3.md)
