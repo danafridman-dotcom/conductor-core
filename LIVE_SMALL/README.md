@@ -44,3 +44,4 @@ ACTIVE
 
 - [Day 1](DAY_1.md)
 - [Day 3](DAY_3.md)
+  - NEXT_MODE: [NEXT_MODE.md](NEXT_MODE.md) — переход после LIVE_SMALL (Day 1–30)
