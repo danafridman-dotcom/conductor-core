@@ -1,0 +1,169 @@
+version: "0.1"
+
+project:
+  name: "SERVER — Conductor (no telegram)"
+  exchange: "OKX"
+  base_quote: "USDT"
+  timezone: "Asia/Jerusalem"
+
+mode: "paper"   # paper | live
+
+communication:
+  telegram_enabled: false
+  external_notifications: false
+
+universe:
+  symbols_watchlist:
+    - "BTC-USDT"
+    - "DOGE-USDT"
+    - "SOL-USDT"
+    - "TON-USDT"
+    - "LINK-USDT"
+    - "SUI-USDT"
+
+data_layer:
+  build_from_ticks: true
+  candle_builder:
+    source: "trades"         # trades | ticks
+    base_resolution: "1s"    # базовое зерно
+    build_timeframes:
+      - "15m"
+      - "30m"
+      - "1h"
+      - "4h"
+      - "1d"
+
+signal_engine:
+  flow_detector:
+    enabled: true
+    impulse_window_seconds: 60
+    detection_modes:
+      - "capital_inflow"
+      - "volume_spike"
+      - "trade_aggression"
+
+    thresholds:
+      min_notional_usdt_1m: 750000
+      min_volume_spike_ratio: 2.5
+      min_trade_count_spike: 1.8
+
+    react_immediately: true
+
+strategy:
+  style: "scalp_momentum"
+  holding_time_max_seconds: 300
+  allow_long: true
+  allow_short: true
+
+risk:
+  account_risk_per_trade_pct: 1.0
+  max_open_positions: 1
+  cooldown_seconds_after_stop: 900
+
+execution:
+  allow_spot: true
+  allow_futures: true
+  futures_max_leverage: 2
+  order_type: "market"           # market | limit
+  slippage_bps_max: 8            # 0.08%
+  reduce_only_on_exit: true
+
+exits:
+  take_profit_ladder:
+    - { pct: 0.35, move: 0.006 }   # +0.6%
+    - { pct: 0.40, move: 0.012 }   # +1.2%
+    - { pct: 0.25, move: 0.020 }   # +2.0%
+  stop_loss:
+    move: 0.008                    # -0.8%
+  move_stop_to_breakeven_after_tp1: true
+
+logging:
+  enabled: true
+  log_level: "INFO"
+  write_trades: true
+  write_signals: true
+  write_decisions: trueversion: "0.1"
+
+project:
+  name: "SERVER — Conductor (no telegram)"
+  exchange: "OKX"
+  base_quote: "USDT"
+  timezone: "Asia/Jerusalem"
+
+mode: "paper"   # paper | live
+
+communication:
+  telegram_enabled: false
+  external_notifications: false
+
+universe:
+  symbols_watchlist:
+    - "BTC-USDT"
+    - "DOGE-USDT"
+    - "SOL-USDT"
+    - "TON-USDT"
+    - "LINK-USDT"
+    - "SUI-USDT"
+
+data_layer:
+  build_from_ticks: true
+  candle_builder:
+    source: "trades"         # trades | ticks
+    base_resolution: "1s"    # базовое зерно
+    build_timeframes:
+      - "15m"
+      - "30m"
+      - "1h"
+      - "4h"
+      - "1d"
+
+signal_engine:
+  flow_detector:
+    enabled: true
+    impulse_window_seconds: 60
+    detection_modes:
+      - "capital_inflow"
+      - "volume_spike"
+      - "trade_aggression"
+
+    thresholds:
+      min_notional_usdt_1m: 750000
+      min_volume_spike_ratio: 2.5
+      min_trade_count_spike: 1.8
+
+    react_immediately: true
+
+strategy:
+  style: "scalp_momentum"
+  holding_time_max_seconds: 300
+  allow_long: true
+  allow_short: true
+
+risk:
+  account_risk_per_trade_pct: 1.0
+  max_open_positions: 1
+  cooldown_seconds_after_stop: 900
+
+execution:
+  allow_spot: true
+  allow_futures: true
+  futures_max_leverage: 2
+  order_type: "market"           # market | limit
+  slippage_bps_max: 8            # 0.08%
+  reduce_only_on_exit: true
+
+exits:
+  take_profit_ladder:
+    - { pct: 0.35, move: 0.006 }   # +0.6%
+    - { pct: 0.40, move: 0.012 }   # +1.2%
+    - { pct: 0.25, move: 0.020 }   # +2.0%
+  stop_loss:
+    move: 0.008                    # -0.8%
+  move_stop_to_breakeven_after_tp1: true
+
+logging:
+  enabled: true
+  log_level: "INFO"
+  write_trades: true
+  write_signals: true
+  write_decisions: true
