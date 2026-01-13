@@ -5,7 +5,9 @@ Stage: observer / no trading
 Purpose:
 - load CONFIG.yml
 - confirm server boot
-- prepare architecture for data + decision + execution
+- init logging
+- prepare directories
+- run ConductorApp core loop
 """
 
 from __future__ import annotations
@@ -16,6 +18,8 @@ from pathlib import Path
 from datetime import datetime
 
 import yaml
+
+from app import ConductorApp
 
 
 # project root: /conductor-core
@@ -84,8 +88,9 @@ def main() -> int:
     boot_banner(cfg)
     prepare_dirs(cfg)
 
-    logging.info("Stage = observer → NO TRADING")
-    logging.info("Server is idle and watching market data")
+    # connect boot -> app core
+    app = ConductorApp(cfg)
+    app.run()
 
     return 0
 
