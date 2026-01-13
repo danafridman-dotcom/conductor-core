@@ -1,62 +1,94 @@
 """
 Conductor Server — entrypoint
 Stage: observer / no trading
+
 Purpose:
 - load CONFIG.yml
 - confirm server boot
-- prepare architecture for data → decision → execution
+- prepare architecture for data + decision + execution
 """
 
+from __future__ import annotations
+
 import sys
+import logging
 from pathlib import Path
-import yaml
 from datetime import datetime
 
+import yaml
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-CONFIG_PATH = ROOT_DIR / "CONFIG.yml"
+
+# project root: /conductor-core
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG_PATH = ROOT / "CONFIG.yml"
+
+
+def setup_logging(log_dir: Path) -> None:
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = log_dir / "conductor.log"
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            logging.FileHandler(log_file, encoding="utf-8"),
+        ],
+    )
 
 
 def load_config(path: Path) -> dict:
     if not path.exists():
-        raise FileNotFoundError(f"CONFIG not found: {path}")
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        raise FileNotFoundError(
+            f"CONFIG.yml not found at {path}\n"
+            f"Create CONFIG.yml in project root."
+        )
+
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("CONFIG.yml must contain key-value mapping")
+
+    return data
 
 
-def main():
-    print("=" * 50)
-    print("CONDUCTOR SERVER — BOOT")
-    print(f"Time: {datetime.utcnow().isoformat()} UTC")
+def boot_banner(cfg: dict) -> None:
+    stage = cfg.get("stage", "observer")
+    run_id = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
 
-    try:
-        config = load_config(CONFIG_PATH)
-    except Exception as e:
-        print("❌ CONFIG LOAD FAILED")
-        print(e)
-        sys.exit(1)
+    logging.info("===================================")
+    logging.info(" Conductor Server BOOT ✓")
+    logging.info(" stage   : %s", stage)
+    logging.info(" run_id  : %s", run_id)
+    logging.info(" config  : %s", CONFIG_PATH)
+    logging.info("===================================")
 
-    print("✅ CONFIG LOADED")
 
-    project = config.get("project", {})
-    universe = config.get("universe", {})
+def prepare_dirs(cfg: dict) -> None:
+    data_dir = ROOT / cfg.get("data_dir", "data")
+    logs_dir = ROOT / cfg.get("logs_dir", "logs")
 
-    print(f"Project: {project.get('name')}")
-    print(f"Exchange: {project.get('exchange')}")
-    print(f"Mode: {project.get('mode')}")
-    print(f"Timezone: {project.get('timezone')}")
+    data_dir.mkdir(parents=True, exist_ok=True)
+    logs_dir.mkdir(parents=True, exist_ok=True)
 
-    symbols = universe.get("symbols_watchlist", [])
-    print(f"Symbols loaded: {len(symbols)}")
-    for s in symbols:
-        print(f" - {s}")
+    logging.info("Directories ready")
+    logging.info(" data : %s", data_dir)
+    logging.info(" logs : %s", logs_dir)
 
-    print("=" * 50)
-    print("STATUS: OBSERVER READY")
-    print("Trading: DISABLED")
-    print("Next step: market data layer")
-    print("=" * 50)
+
+def main() -> int:
+    cfg = load_config(CONFIG_PATH)
+
+    logs_dir = ROOT / cfg.get("logs_dir", "logs")
+    setup_logging(logs_dir)
+
+    boot_banner(cfg)
+    prepare_dirs(cfg)
+
+    logging.info("Stage = observer → NO TRADING")
+    logging.info("Server is idle and watching market data")
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
